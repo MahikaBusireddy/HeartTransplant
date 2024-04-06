@@ -1,4 +1,15 @@
-if ( strcmp( cmd -> args[ 0 ] , "cd" ) == 0 ){
+int executeBuiltIn( command *cmd ) {
+	const char *home_dir = getenv("HOME");
+	if (home_dir != NULL){
+			printf("Changing to the home directory: %s\n", home_dir);
+			if (chdir(home_dir) != 0){
+				fprintf(stderr, "cd: Failed to change to the home directory\n");
+			}
+	} else {
+			fprintf(stderr, "cd: Home environment variable not set\n");
+		}
+		
+	if ( strcmp( cmd -> args[ 0 ] , "cd" ) == 0 ){
 		char *token = cmd -> args[ 1 ];
 
 		if ( cmd -> argCount <= 1 ) {
@@ -28,18 +39,7 @@ if ( strcmp( cmd -> args[ 0 ] , "cd" ) == 0 ){
 		} else {
 			perror("getcwd");
 		}            
-		} else {
-		const char *home_dir = getenv("HOME");
-		if (home_dir != NULL){
-			printf("Changing to the home directory: %s\n", home_dir);
-			if (chdir(home_dir) != 0){
-				fprintf(stderr, "cd: Failed to change to the home directory\n");
-			}
-		} else {
-			fprintf(stderr, "cd: Home environment variable not set\n");
-		}
-		}
-
+	} 
 	else if ( strcmp( cmd -> args[ 0 ] , "pwd" ) == 0 ){
 		char *token = cmd -> args[ 1 ];
 		
